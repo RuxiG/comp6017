@@ -4,12 +4,12 @@
  */
 
 var express = require('express'),
-	routes = require('./routes'),
-	user = require('./routes/user'),
 	http = require('http'),
 	path = require('path'),
 	cons = require('consolidate'),
-	swig = require('swig');
+	swig = require('swig'),
+	mongoose = require('mongoose'),
+	resource = require('express-resource');
 
 var app = express();
 
@@ -39,12 +39,15 @@ app.configure(function () {
 });
 
 app.configure('development', function () {
+	app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
+});
+
+app.configure('production', function () {
 	app.use(express.errorHandler());
 });
 
-// routes
-app.get('/', routes.index);
-app.get('/users/', user.list);
+// resources
+app.resource('collections', require('./routes/collection'));
 
 http.createServer(app).listen(app.get('port'), function () {
 	console.log('Express server listening on port ' + app.get('port'));
