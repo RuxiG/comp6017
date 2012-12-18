@@ -1,6 +1,4 @@
-/*
- * Collection related routes.
- */
+var Collection = require('../models/collection.js').Collection;
 
 
 /**
@@ -9,7 +7,14 @@
 exports.index = {
 	json: function (req, res)
 	{
-		res.send({one: 1, two: 2, three: 3});
+		Collection.find({}, function (err, results) {
+			// TODO: handle errors, if any
+			res.send({
+				collections: results.map(function (collection) {
+					return collection.jsonFields;
+				})
+			});
+		});
 	}
 };
 
