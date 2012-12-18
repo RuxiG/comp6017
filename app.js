@@ -40,10 +40,14 @@ app.configure(function () {
 
 app.configure('development', function () {
 	app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
+	
+	mongoose.connect('mongodb://localhost/comp6017');
 });
 
 app.configure('production', function () {
 	app.use(express.errorHandler());
+	
+	mongoose.connect('mongodb://localhost/comp6017');
 });
 
 // resources
