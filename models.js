@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'),
-	date = require('../utils/date.js');
+	utils = require('./utils.js');
 
 
 /**
@@ -31,7 +31,7 @@ CollectionSchema.virtual('jsonFields').get(function () {
 		id: this._id,
 		name: this.name,
 		author: this.author,
-		created_on: date.date2string(this.created_on)
+		created_on: utils.date2string(this.created_on)
 	};
 });
 

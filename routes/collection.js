@@ -1,4 +1,5 @@
-var Collection = require('../models/collection.js').Collection;
+var models = require('../models.js'),
+	Collection = models.Collection;
 
 
 /**
