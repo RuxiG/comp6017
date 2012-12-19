@@ -3,8 +3,10 @@ var apieasy = require('api-easy'),
 	utils = require('./utils.js');
 
 
-apieasy.describe('REST API for /collections/')
+apieasy.describe('REST API')
 	.use('localhost', 3000)
+	.followRedirect(false)
+	
 	.discuss('Collections resource')
 	.get('/collections')
 		.expect(200)
@@ -18,15 +20,12 @@ apieasy.describe('REST API for /collections/')
 				utils.assertCollection(bodyObj.collections[i]);
 			}
 		})
-	.post('/collections', {name: 'test collection', author: 'test author'})
-		.expect(201)
+	.post('/collections')
+		.expect(406)
 		.expect('respond with json', utils.assertJSON())
-//		.expect('created collection', function (err, res, body) {
-//			var bodyObj = JSON.parse(body);
-//			
-//			utils.assertCollection(bodyObj.collection);
-//			console.log(res);
-////			assert.equal(bodyObj.collection.name, 'test collection');
-////			assert.equal(bodyObj.collection.author, 'test author');
-//		})
+		.expect('has error message', function (err, res, body) {
+			var bodyObj = JSON.parse(body);
+			
+			assert.isString(bodyObj.error);
+		})
 .export(module);
