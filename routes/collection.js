@@ -55,11 +55,20 @@ exports.create = {
 
 
 /**
- * Used for GET on "/:id".
+ * Used for GET on "/:collection".
  */
 exports.show = {
 	json: function (req, res) {
-		res.send({message: 'Show a collection'});
+		Collection.findById(req.param('collection'),
+			function (err, collection) {
+				if (!err) {
+					res.json(200, {collection: collection});
+				} else {
+					console.error(err);
+					
+					res.json(404, {error: 'Collection not found.'});
+				}
+		});
 	}
 };
 
