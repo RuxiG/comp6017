@@ -11,12 +11,11 @@ var CollectionSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 		index: true,
-		unique: true,
 		trim: true
 	},
 	author: {
 		type: String,
-		required: false,
+		required: true,
 		trim: true
 	},
 	created_on: {
@@ -34,6 +33,26 @@ CollectionSchema.virtual('jsonFields').get(function () {
 		created_on: utils.date2string(this.created_on)
 	};
 });
+
+/**
+ * Create a Collection instance from the form's data.
+ * 
+ * @param CollectionForm form.
+ * @returns Collection or null if form has errors;
+ * does not save the instance to the DB.
+ */
+CollectionSchema.statics.createFromForm = function (form) {
+	if (!form.isValid()) {
+		return null;
+	}
+	
+	var collection = this.model('Collection')({
+		name: form.data.name,
+		author: form.data.author
+	});
+	
+	return collection;
+};
 
 
 /**
