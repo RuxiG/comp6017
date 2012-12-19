@@ -11,6 +11,7 @@ var CollectionSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 		index: true,
+		unique: true,
 		trim: true
 	},
 	author: {
