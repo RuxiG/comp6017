@@ -26,12 +26,30 @@ var CollectionSchema = new mongoose.Schema({
 	}
 });
 
+/**
+ * JSON representation of all fields (that the user can see).
+ * 
+ * @returns Object.
+ */
 CollectionSchema.virtual('jsonFields').get(function () {
 	return {
 		id: this._id,
 		name: this.name,
 		author: this.author,
 		created_on: utils.date2string(this.created_on)
+	};
+});
+
+/**
+ * JSON representation of all fields that can be edited.
+ * 
+ * @returns Object.
+ */
+CollectionSchema.virtual('jsonFieldsEdit').get(function () {
+	return {
+		id: this._id,
+		name: this.name,
+		author: this.author
 	};
 });
 

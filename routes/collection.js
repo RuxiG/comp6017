@@ -78,7 +78,16 @@ exports.show = {
  */
 exports.edit = {
 	json: function (req, res) {
-		res.send({message: 'Edit a collection'});
+		Collection.findById(req.param('collection'),
+			function (err, collection) {
+				if (!err) {
+					res.json(200, {collection: collection.jsonFieldsEdit});
+				} else {
+					console.error(err);
+					
+					res.json(404, {error: 'Collection not found.'});
+				}
+		});
 	}
 };
 
