@@ -62,7 +62,7 @@ exports.show = {
 		Collection.findById(req.param('collection'),
 			function (err, collection) {
 				if (!err) {
-					res.json(200, {collection: collection});
+					res.json(200, {collection: collection.jsonFields});
 				} else {
 					console.error(err);
 					
