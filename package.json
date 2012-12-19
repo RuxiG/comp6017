@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node app",
-    "test": "vows tests/* --spec"
+    "test": "vows tests/*-tests.js --spec"
   },
   "dependencies": {
     "express": "3.0.4",
