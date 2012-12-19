@@ -10,13 +10,18 @@ var models = require('../models.js'),
  */
 exports.index = {
 	json: function (req, res) {
-		Collection.find({}, function (err, results) {
-			// TODO: handle errors, if any
-			res.json(200, {
-				collections: results.map(function (collection) {
-					return collection.jsonFields;
-				})
-			});
+		Collection.find(function (err, results) {
+			if (!err) {
+				res.json(200, {
+					collections: results.map(function (collection) {
+						return collection.jsonFields;
+					})
+				});
+			} else {
+				console.error(err);
+				
+				res.json(404, {error: 'Could not find collections.'});
+			}
 		});
 	}
 };
@@ -29,10 +34,17 @@ exports.create = {
 	json: function (req, res) {
 		CollectionForm.handle(req, {
 			success: function (form) {
-				var collection = Collection.createFromForm(form);
-				collection.save();
-				
-				res.json(201, {collection: collection.jsonFields});
+				Collection.createFromForm(form).save(
+					function (err, collection) {
+						if (!err) {
+							res.json(201, {collection: collection.jsonFields});
+						} else {
+							console.error(err);
+							
+							res.json(406,
+								{error: 'Could not create collection.'});
+						}
+				});
 			},
 			other: function (form) {
 				res.json(406, {error: 'Provide a name and author.'});
