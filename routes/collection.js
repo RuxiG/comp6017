@@ -71,7 +71,7 @@ exports.show = {
 
 
 /**
- * Used for GET on "/:id/edit".
+ * Used for GET on "/:collection/edit".
  */
 exports.edit = {
 	json: function (req, res) {
