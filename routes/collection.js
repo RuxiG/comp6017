@@ -89,11 +89,27 @@ exports.edit = {
 
 
 /**
- * Used for PUT on "/:id".
+ * Used for PUT on "/:collection".
  */
 exports.update = {
 	json: function (req, res) {
-		res.send({message: 'Update a collection'});
+		CollectionForm.handle(req, {
+			success: function (form) {
+				Collection.findByIdAndUpdate(req.param('collection'),
+					form.data,
+					function (err, collection) {
+						if (!err) {
+							res.json(200, {collection: collection.jsonFields});
+						} else {
+							console.error(err);
+							res.json(404, {error: 'Collection not found.'});
+						}
+				});
+			},
+			other: function (form) {
+				res.json(406, {error: 'Invalid data supplied.'});
+			}
+		});
 	}
 };
 
