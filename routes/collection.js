@@ -57,15 +57,7 @@ exports.create = {
  */
 exports.show = {
 	json: function (req, res) {
-		Collection.findById(req.param('collection'),
-			function (err, collection) {
-				if (!err) {
-					res.json(200, {collection: collection.jsonFields});
-				} else {
-					console.error(err);
-					res.json(404, {error: 'Collection not found.'});
-				}
-		});
+		res.json(200, {collection: req.collection.jsonFields});
 	}
 };
 
@@ -75,15 +67,7 @@ exports.show = {
  */
 exports.edit = {
 	json: function (req, res) {
-		Collection.findById(req.param('collection'),
-			function (err, collection) {
-				if (!err) {
-					res.json(200, {collection: collection.jsonFieldsEdit});
-				} else {
-					console.error(err);
-					res.json(404, {error: 'Collection not found.'});
-				}
-		});
+		res.json(200, {collection: req.collection.jsonFieldsEdit});
 	}
 };
 
@@ -95,7 +79,7 @@ exports.update = {
 	json: function (req, res) {
 		CollectionForm.handle(req, {
 			success: function (form) {
-				Collection.findByIdAndUpdate(req.param('collection'),
+				Collection.findByIdAndUpdate(req.collection._id,
 					form.data,
 					function (err, collection) {
 						if (!err) {
@@ -119,7 +103,7 @@ exports.update = {
  */
 exports.destroy = {
 	json: function (req, res) {
-		Collection.findByIdAndRemove(req.param('collection'),
+		Collection.findByIdAndRemove(req.collection._id,
 			function (err, collection) {
 				if (!err) {
 					res.json(204);
