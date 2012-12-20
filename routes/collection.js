@@ -19,7 +19,6 @@ exports.index = {
 				});
 			} else {
 				console.error(err);
-				
 				res.json(404, {error: 'Could not find collections.'});
 			}
 		});
@@ -40,7 +39,6 @@ exports.create = {
 							res.json(201, {collection: collection.jsonFields});
 						} else {
 							console.error(err);
-							
 							res.json(406,
 								{error: 'Could not create collection.'});
 						}
@@ -65,7 +63,6 @@ exports.show = {
 					res.json(200, {collection: collection.jsonFields});
 				} else {
 					console.error(err);
-					
 					res.json(404, {error: 'Collection not found.'});
 				}
 		});
@@ -84,7 +81,6 @@ exports.edit = {
 					res.json(200, {collection: collection.jsonFieldsEdit});
 				} else {
 					console.error(err);
-					
 					res.json(404, {error: 'Collection not found.'});
 				}
 		});
