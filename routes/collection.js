@@ -115,10 +115,18 @@ exports.update = {
 
 
 /**
- * Used for DELETE on "/:id".
+ * Used for DELETE on "/:collection".
  */
 exports.destroy = {
 	json: function (req, res) {
-		res.send({message: 'Delete a collection'});
+		Collection.findByIdAndRemove(req.param('collection'),
+			function (err, collection) {
+				if (!err) {
+					res.json(204);
+				} else {
+					console.error(err);
+					res.json(404, {error: 'Collection not found.'});
+				}
+		});
 	}
 };
