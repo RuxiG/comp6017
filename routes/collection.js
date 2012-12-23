@@ -7,6 +7,9 @@ var models = require('../models.js'),
 
 /**
  * Used for GET on "/".
+ * List all collections.
+ * 
+ * @returns list of all collections.
  */
 exports.index = {
 	json: function (req, res) {
@@ -26,6 +29,9 @@ exports.index = {
 
 /**
  * Used for POST on "/".
+ * Create a new collection.
+ * 
+ * @returns created collection.
  */
 exports.create = {
 	json: function (req, res) {
@@ -52,6 +58,9 @@ exports.create = {
 
 /**
  * Used for GET on "/:collection".
+ * Show only a specific collection.
+ * 
+ * @returns the requested collection.
  */
 exports.show = {
 	json: function (req, res) {
@@ -62,6 +71,9 @@ exports.show = {
 
 /**
  * Used for GET on "/:collection/edit".
+ * Show the fields that can be edited for a collection.
+ * 
+ * @returns editable fields for the requested collection.
  */
 exports.edit = {
 	json: function (req, res) {
@@ -72,6 +84,9 @@ exports.edit = {
 
 /**
  * Used for PUT on "/:collection".
+ * Update a collection.
+ * 
+ * @returns updated collection.
  */
 exports.update = {
 	json: function (req, res) {
@@ -98,6 +113,9 @@ exports.update = {
 
 /**
  * Used for DELETE on "/:collection".
+ * Delete a collection.
+ * 
+ * @returns no content.
  */
 exports.destroy = {
 	json: function (req, res) {

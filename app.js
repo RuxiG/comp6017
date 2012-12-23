@@ -12,6 +12,7 @@ var express = require('express'),
 	resource = require('express-resource'),
 	models = require('./models.js');
 
+
 var app = express();
 
 app.configure(function () {
@@ -39,19 +40,25 @@ app.configure(function () {
 	app.use(express.static(path.join(__dirname, 'public')));
 });
 
+// development environment
 app.configure('development', function () {
 	app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
 	
 	mongoose.connect('mongodb://localhost/comp6017');
 });
 
+// production environment
 app.configure('production', function () {
 	app.use(express.errorHandler());
 	
 	mongoose.connect('mongodb://localhost/comp6017');
 });
 
-// resources
+/**
+ * Auto-load a resource's model based on the passed ID value.
+ * @param model: model class to search in.
+ * @returns Function.
+ */
 function resourceLoad (model) {
 	return function (req, id, fn) {
 		model.findById(id, function (err, doc) {
@@ -60,11 +67,13 @@ function resourceLoad (model) {
 	};
 }
 
+// resources
 var collections = app.resource('collections', require('./routes/collection'),
 		{load: resourceLoad(models.Collection)});
 var comments = app.resource('comments', require('./routes/comment'));
 collections.add(comments);
 
+// http server
 http.createServer(app).listen(app.get('port'), function () {
 	console.log('Express server listening on port ' + app.get('port'));
 });

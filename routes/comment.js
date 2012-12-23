@@ -9,6 +9,9 @@ var models = require('../models.js'),
 
 /**
  * Used for GET on "/".
+ * List all comments for a collection.
+ * 
+ * @returns list of comments for the requested collection.
  */
 exports.index = {
 	json: function (req, res) {
@@ -21,6 +24,9 @@ exports.index = {
 
 /**
  * Used for POST on "/".
+ * Create a new comment in a collection.
+ * 
+ * @returns updated collection.
  */
 exports.create = {
 	json: function (req, res) {
@@ -48,6 +54,9 @@ exports.create = {
 
 /**
  * Used for GET on "/:comment".
+ * Get the fields for a collection's comment.
+ * 
+ * @returns the requested comment.
  */
 exports.show = {
 	json: function (req, res) {
@@ -59,6 +68,9 @@ exports.show = {
 
 /**
  * Used for GET on "/:comment/edit".
+ * Get editable fields for a collection's comment.
+ * 
+ * @returns editable fields for the requested comment.
  */
 exports.edit = {
 	json: function (req, res) {
@@ -70,6 +82,9 @@ exports.edit = {
 
 /**
  * Used for PUT on "/:comment".
+ * Update a collection's comment.
+ * 
+ * @returns updated comment.
  */
 exports.update = {
 	json: function (req, res) {
@@ -114,6 +129,9 @@ exports.update = {
 
 /**
  * Used for DELETE on "/:comment".
+ * Delete a collection's comment.
+ * 
+ * @returns no content.
  */
 exports.destroy = {
 	json: function (req, res) {

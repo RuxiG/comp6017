@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
  * Schema for Comment model.
  */
 var CommentSchema = new mongoose.Schema({
+	// fields
 	author: {
 		type: String,
 		required: true,
