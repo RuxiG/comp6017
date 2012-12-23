@@ -12,11 +12,9 @@ exports.index = {
 	json: function (req, res) {
 		Collection.find(function (err, results) {
 			if (!err) {
-				res.json(200, {
-					collections: results.map(function (collection) {
-						return collection.jsonFields;
-					})
-				});
+				res.json(200, results.map(function (collection) {
+					return collection.jsonFields;
+				}));
 			} else {
 				console.error(err);
 				res.json(404, {error: 'Could not find collections.'});
@@ -36,7 +34,7 @@ exports.create = {
 				Collection.createFromForm(form).save(
 					function (err, collection) {
 						if (!err) {
-							res.json(201, {collection: collection.jsonFields});
+							res.json(201, collection.jsonFields);
 						} else {
 							console.error(err);
 							res.json(406,
@@ -57,7 +55,7 @@ exports.create = {
  */
 exports.show = {
 	json: function (req, res) {
-		res.json(200, {collection: req.collection.jsonFields});
+		res.json(200, req.collection.jsonFields);
 	}
 };
 
@@ -67,7 +65,7 @@ exports.show = {
  */
 exports.edit = {
 	json: function (req, res) {
-		res.json(200, {collection: req.collection.jsonFieldsEdit});
+		res.json(200, req.collection.jsonFieldsEdit);
 	}
 };
 
@@ -83,7 +81,7 @@ exports.update = {
 					form.data,
 					function (err, collection) {
 						if (!err) {
-							res.json(200, {collection: collection.jsonFields});
+							res.json(200, collection.jsonFields);
 						} else {
 							console.error(err);
 							res.json(404, {error: 'Collection not found.'});
