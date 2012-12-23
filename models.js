@@ -3,91 +3,6 @@ var mongoose = require('mongoose'),
 
 
 /**
- * Schema for Collection model.
- */
-var CollectionSchema = new mongoose.Schema({
-	// fields
-	name: {
-		type: String,
-		required: true,
-		index: true,
-		unique: true,
-		trim: true
-	},
-	author: {
-		type: String,
-		required: true,
-		trim: true
-	},
-	created_on: {
-		type: Date,
-		'default': Date.now,
-		required: true
-	},
-	comments: {
-		type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],
-		required: false
-	}
-});
-
-/**
- * JSON representation of all fields (that the user can see).
- * 
- * @returns Object.
- */
-CollectionSchema.virtual('jsonFields').get(function () {
-	return {
-		id: this._id,
-		name: this.name,
-		author: this.author,
-		created_on: utils.date2string(this.created_on),
-		comments: this.comments.map(function (comment) {
-			return comment.jsonFields;
-		})
-	};
-});
-
-/**
- * JSON representation of all fields that can be edited.
- * 
- * @returns Object.
- */
-CollectionSchema.virtual('jsonFieldsEdit').get(function () {
-	return {
-		id: this._id,
-		name: this.name,
-		author: this.author
-	};
-});
-
-/**
- * Create a Collection instance from the form's data.
- * 
- * @param CollectionForm form.
- * @returns Collection or null if form has errors;
- * does not save the instance to the DB.
- */
-CollectionSchema.statics.createFromForm = function (form) {
-	if (!form.isValid()) {
-		return null;
-	}
-	
-	var collection = this.model('Collection')({
-		name: form.data.name,
-		author: form.data.author
-	});
-	
-	return collection;
-};
-
-
-/**
- * Collection model.
- */
-var Collection = mongoose.model('Collection', CollectionSchema);
-
-
-/**
  * Schema for Comment model.
  */
 var CommentSchema = new mongoose.Schema({
@@ -155,11 +70,85 @@ CommentSchema.statics.createFromForm = function (form) {
 	return comment;
 };
 
+var Comment = mongoose.model('Comment', CommentSchema); // model
+
 
 /**
- * Comment model.
+ * Schema for Collection model.
  */
-var Comment = mongoose.model('Comment', CommentSchema);
+var CollectionSchema = new mongoose.Schema({
+	// fields
+	name: {
+		type: String,
+		required: true,
+		index: true,
+		unique: true,
+		trim: true
+	},
+	author: {
+		type: String,
+		required: true,
+		trim: true
+	},
+	created_on: {
+		type: Date,
+		'default': Date.now,
+		required: true
+	},
+	comments: [CommentSchema]
+});
+
+/**
+ * JSON representation of all fields (that the user can see).
+ * 
+ * @returns Object.
+ */
+CollectionSchema.virtual('jsonFields').get(function () {
+	return {
+		id: this._id,
+		name: this.name,
+		author: this.author,
+		created_on: utils.date2string(this.created_on),
+		comments: this.comments.map(function (comment) {
+			return comment.jsonFields;
+		})
+	};
+});
+
+/**
+ * JSON representation of all fields that can be edited.
+ * 
+ * @returns Object.
+ */
+CollectionSchema.virtual('jsonFieldsEdit').get(function () {
+	return {
+		id: this._id,
+		name: this.name,
+		author: this.author
+	};
+});
+
+/**
+ * Create a Collection instance from the form's data.
+ * 
+ * @param CollectionForm form.
+ * @returns Collection or null if form has errors;
+ * does not save the instance to the DB.
+ */
+CollectionSchema.statics.createFromForm = function (form) {
+	if (!form.isValid()) {
+		return null;
+	}
+	
+	var collection = this.model('Collection')({
+		name: form.data.name,
+		author: form.data.author
+	});
+	
+	return collection;
+};
+
+var Collection = mongoose.model('Collection', CollectionSchema); // model
 
 
 /**
