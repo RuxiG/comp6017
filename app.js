@@ -62,8 +62,8 @@ function resourceLoad (model) {
 
 var collections = app.resource('collections', require('./routes/collection'),
 		{load: resourceLoad(models.Collection)});
-//var comments = app.resource('comments', require('./routes/comment'));
-//collections.add(comments);
+var comments = app.resource('comments', require('./routes/comment'));
+collections.add(comments);
 
 http.createServer(app).listen(app.get('port'), function () {
 	console.log('Express server listening on port ' + app.get('port'));
