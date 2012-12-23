@@ -36,9 +36,6 @@ var CollectionSchema = new mongoose.Schema({
  * @returns Object.
  */
 CollectionSchema.virtual('jsonFields').get(function () {
-	// replace list of ObjectIds with actual Comment instances
-	this.populate('comments');
-	
 	return {
 		id: this._id,
 		name: this.name,
@@ -56,16 +53,10 @@ CollectionSchema.virtual('jsonFields').get(function () {
  * @returns Object.
  */
 CollectionSchema.virtual('jsonFieldsEdit').get(function () {
-	// replace list of ObjectIds with actual Comment instances
-	this.populate('comments');
-	
 	return {
 		id: this._id,
 		name: this.name,
-		author: this.author,
-		comments: this.comments.map(function (comment) {
-			return comment.jsonFieldsEdit;
-		})
+		author: this.author
 	};
 });
 
