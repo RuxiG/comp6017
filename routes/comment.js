@@ -39,7 +39,7 @@ exports.create = {
 							res.json(201, collection.jsonFields);
 						} else {
 							console.error(err);
-							res.json(406,
+							res.json(500,
 								{error: 'Could not create comment.'});
 						}
 				});
@@ -114,7 +114,8 @@ exports.update = {
 							});
 						} else {
 							console.error(err);
-							res.json(404, {error: 'Comment not found.'});
+							res.json(500,
+								{error: 'Could not update comment.'});
 						}
 					}
 				);
